@@ -107,7 +107,16 @@ namespace CrudOperationsAssignment.DAO
             string quantity = Console.ReadLine();
             Console.WriteLine("\t\t\t\tEnter status :");
             Console.Write("                                ");
-            bool status =Convert.ToBoolean( Console.ReadLine());
+            bool status;
+            string boolValue = Console.ReadLine();
+            if (boolValue == "yes")
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
             Console.WriteLine("\t\t\t\tEnter category Id :");
             Console.Write("                                ");
             string cat = Console.ReadLine();
@@ -145,6 +154,7 @@ namespace CrudOperationsAssignment.DAO
             Console.WriteLine("\t\t\t\t1.Product Name");
             Console.WriteLine("\t\t\t\t2.Product quantity");
             Console.WriteLine("\t\t\t\t3.Product Price");
+            Console.WriteLine("\t\t\t\t4.Enter Status");
             Console.WriteLine("\t\t\t\t====================================================");
             Console.WriteLine("Enter you choice: ");
             Console.Write("                                ");
@@ -161,6 +171,21 @@ namespace CrudOperationsAssignment.DAO
                     Builders<product>.Update
                    .Set("name",name)
                  
+                   /*
+                    * How to take boolena as Input From Console
+                    *  boolean boolValue; 
+                       string boolInput=Console.ReadLine();
+                       if(boolInput=="yes")
+                       {
+                           boolValue=true;
+                       }
+                       else
+                       {
+                           boolValue=false;
+                       }
+                    */
+
+
                 );
                     //Console.WriteLine("Update: " + result.ModifiedCount);
                     if (result.ModifiedCount > 0)
@@ -223,6 +248,23 @@ namespace CrudOperationsAssignment.DAO
                         Console.WriteLine("\t\t\t\tWrong Product Key!!!");
                         Console.WriteLine("\t\t\t\t=============================\n");
                     }
+                    break;
+                    case 4:
+                        Console.WriteLine("Enter Product Status");
+                        bool status;
+                        string boolValue = Console.ReadLine();
+                        if(boolValue=="yes" || boolValue=="Yes" || boolValue == "YES")
+                        {
+                         status = true;
+                        }
+                        else
+                        {
+                         status = false;
+                        }
+                    var re2 = productCollection.UpdateOne(
+                    Builders<product>.Filter.Eq("categoryId", id),
+                    Builders<product>.Update
+                   .Set("status", status));
                     break;
             }
             /*var result = productCollection.UpdateOne(
